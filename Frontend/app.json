@@ -1,0 +1,76 @@
+{
+  "expo": {
+    "scheme" : "saloon",
+    "name": "Saloon",
+    "slug": "saloon",
+    "version": "1.0.0",
+    "jsEngine" : "hermes",
+    "orientation": "portrait",
+    "icon": "./assets/photos/Icon.png",
+    "androidNavigationBar": {
+      "barStyle": "light-content",
+      "backgroundColor": "#040303"
+    },
+    "androidStatusBar": {
+      "barStyle": "light-content",
+      "backgroundColor": "#040303"
+    },
+    "splash": {
+      "image": "./assets/photos/Logo.png",
+      "backgroundColor": "#040303"
+    },
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "isAndroidBackgroundLocationEnabled": "Allow $(PRODUCT_NAME) to use your location."
+        }
+      ]
+    ],
+    "updates": {
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/e1a6c84f-b2fe-4b79-9faf-39634e4c8c78"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.saloon.app"
+    },
+    "notification":{
+      "icon": "./assets/photos/Icon.png"
+    },
+    
+    "android": {
+      "package": "com.saloon.app",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/photos/Icon.png",
+        "backgroundColor": "#151515"
+      },
+      "config" : {
+        "googleMaps" : {
+          "apiKey" : "AIzaSyDfApfGwrPP8JZxpnVYUHiReUHmFfK_1IE"
+        }
+      },
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.ACCESS_BACKGROUND_LOCATION",
+        "ACCESS_FINE_LOCATION"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/photos/Logo.png",
+      "bundler": "webpack"
+    },
+    "extra": {
+      "googleMapsApiKey": "AIzaSyDcdSYW2kGVmVsbpE6WHPT6dEWbbt7jGGc",
+      "eas": {
+        "projectId": "e1a6c84f-b2fe-4b79-9faf-39634e4c8c78"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    }
+  }
+}
