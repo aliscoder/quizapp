@@ -25,13 +25,21 @@ type Props = {
 
 const GameStarted = ({ game }: Props) => {
   const [
-    answerQuestion,
+    getFirstQuestion,
     {
       data: question,
       isSuccess: firstAnswerSuccess,
       isLoading: firstAnswerLoading,
     },
   ] = useAnswerQuestionMutation();
+  // const [
+  //   answerQuestion,
+  //   {
+  //     data: question,
+  //     isSuccess: firstAnswerSuccess,
+  //     isLoading: firstAnswerLoading,
+  //   },
+  // ] = useAnswerQuestionMutation();
 
   const [currQuestion, setCurrQuestion] = useState<any>();
   const [correct, setCorrect] = useState(0);
@@ -41,10 +49,12 @@ const GameStarted = ({ game }: Props) => {
   const userPlayer = game.players.find((player) => player.user._id == user._id);
 
   useEffect(() => {
-    answerQuestion({
-      gameId: game._id,
-      playerId: userPlayer?.user._id!,
-    });
+    // answerQuestion({
+    //   gameId: game._id,
+    //   playerId: userPlayer?.user._id!,
+    // });
+
+    getFirstQuestion
   }, []);
 
   useEffect(() => {

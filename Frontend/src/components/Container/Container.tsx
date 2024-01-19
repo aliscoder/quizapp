@@ -30,12 +30,12 @@ interface ContainerProps extends IViewProps {
 
 const MainHeader = ({hasBack} : {hasBack?: boolean}) => {
   const { user } = useAuth();
-  const {navigate} = useNavigation<UserScreenNavigationProp>()
+  const {navigate, goBack} = useNavigation<UserScreenNavigationProp>()
 
   return (
     <Column>
       <RowBetween mx={2} borderRadius={5} height={12} px={4} my={2} bg="card.background">
-        {hasBack && <Icon name='arrow-back' as={SimpleLineIcons} size='md' />}
+        {hasBack && <Touch onPress={goBack}><Icon name='arrow-left' as={SimpleLineIcons} size='md' /></Touch>}
         <Touch onPress={() => navigate('Deposit')}>
           <Row bg="light.500" borderRadius={15} pr={2} h={8}>
             <Animation size={40} name={CoinAnimation} />

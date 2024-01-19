@@ -12,7 +12,7 @@ export type Player = {
   prize: number;
   rank: number;
   status: "done" | "wait" | "in";
-  lastQIndex: number
+  latestQuestion: Types.ObjectId
 };
 
 export interface GameInterface extends Document {
@@ -53,7 +53,7 @@ const gameSchema: Schema = new mongoose.Schema<GameInterface>({
         prize: Number,
         rank: Number,
         status: {type: String , default: 'wait' , required: true},
-        lastQIndex: {type: Number , default: 0, required: true}
+        latestQuestion: {type: Schema.Types.ObjectId, ref: 'Question'}
       },
       
     ],

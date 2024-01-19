@@ -14,7 +14,7 @@ import { setGames } from "../crons";
 const gameRouter = express.Router();
 
 gameRouter.get("/user/:userId", getAllGames);
-gameRouter.get("/:id", getGame);
+gameRouter.get("/:userId/:gameId", getGame);
 gameRouter.get("/:id/players", gamePlayerList);
 gameRouter.post("/:id/start", startGame);
 gameRouter.post("/:id/answer", answerQuestion);

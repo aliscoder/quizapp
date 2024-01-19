@@ -18,61 +18,18 @@ const clientApi = Api.injectEndpoints({
     /*
     GET SPECIFIC GAME
     */
-    getGame: builder.query<GameInterface, string>({
-      query: (gameId) => ({
-        url: `/games/${gameId}`,
+    getGame: builder.query<GameInterface, {gameId: string , userId:string}>({
+      query: ({gameId, userId}) => ({
+        url: `/games/${userId}/${gameId}`,
         method: "GET",
       }),
       keepUnusedDataFor: 0
     }),
 
-    /*
-    GET GAME PLAYERS
+     /*
+    REGISTER USER IN GAME
     */
-    getGamePlayers: builder.query<PlayerInterface[], string>({
-      query: (gameId) => ({
-        url: `/games/${gameId}/players`,
-        method: "GET",
-      }),
-    }),
-
-    /*
-    CHANGE GAME STATUS
-    */
-    changeGameStatus: builder.mutation<
-      any,
-      { gameId: string; playerId: string; status: "before" | "after" | "start" }
-    >({
-      query: (body) => ({
-        url: `/games/change_status`,
-        method: "POST",
-        body,
-      }),
-      // invalidatesTags: ["Games"],
-    }),
-
-    /*
-    ANSWER QUESTION
-    */
-    answerQuestion: builder.mutation<
-      any,
-      { gameId: string; playerId: string; qId?: string; answer?: number }
-    >({
-      query: (body) => ({
-        url: `/games/${body.gameId}/answer`,
-        method: "POST",
-        body,
-      }),
-      // invalidatesTags: ["Games"],
-    }),
-
-    /*
-    UPDATE USER PROFILE
-    */
-    registerUserInGame: builder.mutation<
-      { game: GameInterface; user: UserInterface },
-      { gameId: string; userId: string }
-    >({
+    registerUserInGame: builder.mutation< { game: GameInterface; user: UserInterface }, { gameId: string; userId: string }>({
       query: (body) => ({
         url: "/games/register_game",
         method: "POST",
@@ -80,6 +37,19 @@ const clientApi = Api.injectEndpoints({
       }),
       invalidatesTags: ["Games"],
     }),
+
+    /*
+    ANSWER QUESTION
+    */
+    answerQuestion: builder.mutation<any, { gameId: string; playerId: string; qId?: string; answer?: number }>({
+      query: (body) => ({
+        url: `/games/${body.gameId}/answer`,
+        method: "POST",
+        body,
+      }),
+    }),
+
+   
   }),
 });
 
@@ -87,9 +57,7 @@ export const {
   useRegisterUserInGameMutation,
   useGetAllGamesQuery,
   useGetGameQuery,
-  useGetGamePlayersQuery,
   useAnswerQuestionMutation,
-  useChangeGameStatusMutation,
 } = clientApi;
 
 export default clientApi;

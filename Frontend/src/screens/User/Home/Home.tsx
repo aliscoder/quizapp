@@ -8,7 +8,7 @@ import Games from "./components/Games";
 
 const HomeTopTab = createMaterialTopTabNavigator();
 
-const Home = memo(() => {
+const Home = () => {
   return (
     <Container>
       <HomeTopTab.Navigator
@@ -29,6 +29,6 @@ const Home = memo(() => {
       </HomeTopTab.Navigator>
     </Container>
   );
-});
+};
 
-export default Home;
+export default memo(Home);
