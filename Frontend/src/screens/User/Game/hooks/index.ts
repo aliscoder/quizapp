@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { gameContext, socketContext } from '../GameProvider'
+import { gameContext } from '../GameProvider'
 
 
 export const useGame = () => {
@@ -7,7 +7,3 @@ export const useGame = () => {
   return gameQuery
 }
 
-export const useGameSocket = () => {
-  const socket = useContext(socketContext)
-  return socket
-}

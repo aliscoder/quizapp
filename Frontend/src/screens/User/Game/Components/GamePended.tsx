@@ -9,8 +9,8 @@ import {
 import { useAuth } from "@hooks";
 import { Center, FlatList } from "native-base";
 import React from "react";
-import CircularProgress from 'react-native-circular-progress-indicator';
 import { useGame } from "../hooks";
+import Timer from "./Timer";
 
 
 
@@ -19,30 +19,12 @@ const GamePended = () => {
   const {game} = useGame()
 
   
+
+  
   return game && (
     <Column h="full" pb={5}>
       <Center h="1/2">
-        <CircularProgress
-          value={0}
-          radius={120}
-          maxValue={500}
-          initialValue={game.startTime - game.nowTime}
-          progressValueColor={'#fff'}
-          progressValueStyle={{fontSize: 46, fontFamily: 'Yekan'}}
-          activeStrokeWidth={5}
-          inActiveStrokeWidth={15}
-          duration={(game.startTime - game.nowTime) * 1000}
-          // onAnimationComplete={changeGameStatus}
-          progressFormatter={(value: number) => {
-            'worklet';
-      
-            const seconds = Math.floor(value % 60);
-            const minutes = Math.floor((value / 60) % 60);
-            const hours = Math.floor(value / 3600)
-
-            return `${hours < 10 ? '0'+hours : hours} : ${minutes < 10 ? '0'+minutes : minutes} : ${seconds < 10 ? '0'+seconds : seconds}`; // 2 decimal places
-          }}
-        />
+        <Timer start={game.nowTime} end={game.startTime} />
       </Center>
       <Card h="1/2" bgColor="transparent">
         <RowBetween p={2}>

@@ -25,13 +25,13 @@ const RegisterModal = ({ isOpen, toggleModal, game }: Props) => {
     useEffect(() => {
         if(isSuccess) {
             showSuccess('ثبت نام با موفقیت انجام شد')
-            delay(toggleModal)
+            toggleModal()
         }
 
         if(isError) {
             //@ts-ignore
             showError(error.data.error)
-            delay(toggleModal)
+            toggleModal()
         }
     }, [isSuccess , isError])
 

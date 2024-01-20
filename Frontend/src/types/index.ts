@@ -14,7 +14,6 @@ export interface PlayerInterface {
   rank:number;
   prize:number;
   status:'wait' | 'in' | 'done',
-  lastQIndex: number
 }
 
 export interface GameInterface {
@@ -26,6 +25,7 @@ export interface GameInterface {
   players: PlayerInterface[];
   questions: string[];
   status: "before" | "after" | "start";
+  latestQuestion: any;
   type: 10000 | 20000 | 50000;
 }
 

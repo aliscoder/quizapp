@@ -60,21 +60,21 @@ export const seedGames = async (req: Request, res: Response) => {
     const startTime = startOfDay + i * 10 * 60;
     const endTime = startTime + 590;
 
-    const players = [];
-    for (let j = random(1, 5); j < random(6, 20); j++) {
-      players.push({ user: users[j]._id, point: 0, isUp: false });
-    }
-
     const qs: any[] = [];
     for (let j = 0; j < 10; j++) {
       const randomQ = questions[j + random(1, 150)];
 
-      if (!qs.includes(randomQ)) {
+     
         qs.push(randomQ);
-      } else {
-        j--;
-      }
+      
     }
+
+    const players = [];
+    for (let j = random(1, 5); j < random(6, 20); j++) {
+      players.push({ user: users[j]._id, point: 0, isUp: false, latestQuestion: qs[0] });
+    }
+
+    
 
     await Game.create({
       type: sample([10000, 20000, 50000]),
@@ -106,9 +106,11 @@ export const getAllGames = async (req: Request, res: Response) => {
 };
 
 export const getGame = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const game = await Game.findOne({ _id: id }).populate('players.user');
-  res.status(200).json({ ...game.toObject(), nowTime: moment().unix() });
+  const { userId, gameId } = req.params;
+  const game = await Game.findOne({ _id: gameId }).populate('players.user');
+  const latestQuestionId = game.players.find(player => player.user._id == (userId as any)).latestQuestion;
+  const latestQuestion = await Question.findById(latestQuestionId)
+  res.status(200).json({ ...game.toObject(), nowTime: moment().unix(), latestQuestion : game.status === 'start' ? latestQuestion : null });
 };
 
 export const gamePlayerList = async (req: Request, res: Response) => {
@@ -336,6 +338,11 @@ export const registerGame = async (req: Request, res: Response) => {
   const game = await Game.findOne({ _id: gameId });
   const user = await User.findOne({ _id: userId });
 
+  if(game.players.find(item =>  item.user == userId)) {
+    res.status(400).json({ error: 'شما قبلا ثبت نام کرده اید' });
+  }else {
+
+  
   if (user.coin >= game.type) {
     if (game.startTime > moment().unix()) {
       if (
@@ -367,6 +374,7 @@ export const registerGame = async (req: Request, res: Response) => {
                 rank: 0,
                 prize: 0,
                 status: "wait",
+                latestQuestion: game.questions[0]
               },
             },
           },
@@ -388,4 +396,5 @@ export const registerGame = async (req: Request, res: Response) => {
   } else {
     res.status(400).json({ error: "موجودی کافی نیست" });
   }
+}
 };
