@@ -6,6 +6,7 @@ import { UserBottomTabParamList, UserStackParamList } from "./utils/types";
 import Game from "@screens/User/Game/Game";
 import Deposit from "@screens/User/Deposit/Deposit";
 import Profile from "@screens/User/Profile/Profile";
+import GameProvider from "@screens/User/Game/GameProvider";
 
 
 
@@ -28,7 +29,7 @@ const UserNavigator = () => {
   return (
     <UserStack.Navigator screenOptions={{ headerShown: false }}>
       <UserStack.Screen name="Main" component={BottomTabStack} />
-      <UserStack.Screen name="Game" component={Game} />
+      <UserStack.Screen name="Game" component={GameProvider} />
       <UserStack.Screen name="Deposit" component={Deposit} />
     </UserStack.Navigator>
   );

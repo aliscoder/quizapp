@@ -244,7 +244,7 @@ export const answerQuestion = async (req: Request, res: Response) => {
         }
       );
 
-      res.status(200).json(game.questions[player.lastQIndex]);
+      // res.status(200).json(game.questions[player.lastQIndex]);
     } else {
       await Game.updateOne(
         { _id: id, "players.user": playerId },

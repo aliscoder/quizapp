@@ -1,26 +1,23 @@
 import { Container, Error, Loading } from "@components";
-import React, { useEffect, useState } from "react";
-import { useRoute } from "@react-navigation/core";
-import { useGetGameQuery } from "@state/api/game";
-import { GameRouteProp } from "@navigation/utils/types";
+import React from "react";
 import GamePended from "./Components/GamePended";
 import GameStarted from "./Components/GameStarted";
-import GameFinished from "./Components/GameFinished";
+import { useGame } from "./hooks";
+
+
 
 const Game = () => {
-  const { params } = useRoute<GameRouteProp>();
-  const { gameId: id } = params;
-  const { data: game, isLoading, isError } = useGetGameQuery(id, { pollingInterval: 3000 });
+  const {isLoading , isError , game} = useGame()
 
   return isLoading ? (
     <Loading />
   ) : isError || !game ? (
     <Error />
   ) : (
-    <Container hasBack = {game.status !== 'start'}>
-      {game.status == "before" && <GamePended game={game} />}
-      {game.status == "start" && <GameStarted game={game} />}
-      {/* {status == "after"  &&  <GameFinished game={game}   />} */}
+    <Container hasBack={game.status !== 'start'}>
+      {game.status == "before" && <GamePended />}
+      {/* {game.status == "start" && <GameStarted />} */}
+      {/* {game.status == "after"  &&  <GameFinished />} */}
     </Container>
   );
 };

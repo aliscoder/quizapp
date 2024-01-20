@@ -14,7 +14,7 @@ import { useAnswerQuestionMutation } from "@state/api/game";
 import { GameInterface, PlayerInterface } from "@types";
 import { Avatar, Center, Icon, Text, View } from "native-base";
 import React, { useEffect, useState } from "react";
-import isCorrect from "../checkCorrectAnswer";
+import isCorrect from "../../../../utils/checkCorrectAnswer";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { FontAwesome } from "@expo/vector-icons";
 import CircularProgress from "react-native-circular-progress-indicator";
