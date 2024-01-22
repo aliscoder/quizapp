@@ -19,9 +19,9 @@ const PlayersAvatarGroup = ({ players }: Props) => {
     >
       {players
         .map((player) => player.user.avatar?.url)
-        .map((item) => (
+        .map((item, index) => (
           <Avatar
-            key={item}
+            key={index}
             bg="green.500"
             source={{
               uri: item,

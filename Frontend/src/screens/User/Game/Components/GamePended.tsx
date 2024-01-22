@@ -11,17 +11,20 @@ import { Center, FlatList } from "native-base";
 import React from "react";
 import { useGame } from "../hooks";
 import Timer from "./Timer";
+import { GameInterface } from "@types";
 
 
 
-const GamePended = () => {
+const GamePended = ({game} : {game:GameInterface}) => {
   const { user } = useAuth();
-  const {game} = useGame()
+
+
+
 
   
 
   
-  return game && (
+  return (
     <Column h="full" pb={5}>
       <Center h="1/2">
         <Timer start={game.nowTime} end={game.startTime} />
@@ -33,7 +36,7 @@ const GamePended = () => {
         </RowBetween>
         <FlatList
           style={{ maxHeight: 400 }}
-          data={game.players}
+          data={game.players.slice(0).reverse()}
           renderItem={({ item, index }) => (
             <RowBetween
               p={2}

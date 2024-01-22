@@ -8,7 +8,7 @@ import middlewares from "./startup/middlewares";
 import routes from "./startup/routes";
 import server from "./startup/server";
 import cron from "node-cron";
-import { changeGames, setGames } from "./crons";
+import { changeGames } from "./crons";
 
 const app = express();
 export const HTTPserver = http.createServer(app);
@@ -17,7 +17,9 @@ export const HTTPserver = http.createServer(app);
 
 moment.locale("fa");
 
-cron.schedule("*/5 * * * * *", changeGames);
+
+cron.schedule("*/5 * * * * *", changeGames)
+
 
 config();
 middlewares(app);

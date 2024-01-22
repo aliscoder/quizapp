@@ -13,7 +13,6 @@ import { generateAnswerString, isCorrect } from "../utils/generateAnswerString";
 
 export const seedGames = async (req: Request, res: Response) => {
   await Game.remove();
-  await User.remove();
   await Question.remove();
   await Avatar.remove();
 
@@ -58,14 +57,22 @@ export const seedGames = async (req: Request, res: Response) => {
 
   for (let i = 0; i < totalGamesCount; i++) {
     const startTime = startOfDay + i * 10 * 60;
-    const endTime = startTime + 590;
+    const endTime = startTime + 60;
 
     const qs: any[] = [];
     for (let j = 0; j < 10; j++) {
-      const randomQ = questions[j + random(1, 150)];
+
+      function getRandomQ () {
+        return questions[j + random(1, 150)];
+      }
+
+      if(qs.includes(getRandomQ())) {
+        getRandomQ()
+      }else {
+        qs.push(getRandomQ());
+      }
 
      
-        qs.push(randomQ);
       
     }
 
@@ -82,7 +89,6 @@ export const seedGames = async (req: Request, res: Response) => {
       endTime,
       image: sample(IMAGES),
       players,
-      status: "before",
       questions: qs,
     });
   }
@@ -97,11 +103,13 @@ export const getAllGames = async (req: Request, res: Response) => {
     endTime: { $gte: moment().unix() },
   }).populate("players.user");
 
-  const userGames = await Game.find({
-    endTime: { $gte: moment().unix() },
+  const userGames = await Game.find({ endTime: { $gte: moment().unix() },
     "players.user": { $in: userId },
   }).populate("players.user");
 
+  if(!(allGames[0]?.players?.find(player => player.user._id == (userId as any)))) {
+    allGames.shift()
+  }
   res.status(200).json({ all: allGames, mine: userGames });
 };
 
@@ -109,124 +117,19 @@ export const getGame = async (req: Request, res: Response) => {
   const { userId, gameId } = req.params;
   const game = await Game.findOne({ _id: gameId }).populate('players.user');
   const latestQuestionId = game.players.find(player => player.user._id == (userId as any)).latestQuestion;
-  const latestQuestion = await Question.findById(latestQuestionId)
-  res.status(200).json({ ...game.toObject(), nowTime: moment().unix(), latestQuestion : game.status === 'start' ? latestQuestion : null });
-};
+  const latestQuestion = await Question.findById(latestQuestionId);
 
-export const gamePlayerList = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const game = await Game.findOne({ _id: id });
-  if (game.endTime > moment().unix() && game.players[0].rank == 0) {
-    const sorted = game.players.sort((a, b) => b.point - a.point);
-    const totalPrize = game.players.length * game.type;
-    const first = sorted[0];
-    const second = sorted[1];
-    const third = sorted[2];
-
-    if (game.players.length <= 4) {
-      await User.findOneAndUpdate(
-        { _id: first.user },
-        { $inc: { coin: round(totalPrize * 0.8) } }
-      );
-      await Game.updateOne(
-        { "players.user": first },
-        {
-          $set: {
-            "players.$.rank": 1,
-            "player.$.prize": round(totalPrize * 0.8),
-          },
-        }
-      );
-    } else if (game.players.length > 4 && game.players.length <= 8) {
-      // 60% first , 20% second
-      await User.findOneAndUpdate(
-        { _id: first.user },
-        { $inc: { coin: round(totalPrize * 0.6) } }
-      );
-      await User.findOneAndUpdate(
-        { _id: second.user },
-        { $inc: { coin: round(totalPrize * 0.2) } }
-      );
-      await Game.updateOne(
-        { "players.user": first },
-        {
-          $set: {
-            "players.$.rank": 1,
-            "player.$.prize": round(totalPrize * 0.6),
-          },
-        }
-      );
-      await Game.updateOne(
-        { "players.user": second },
-        {
-          $set: {
-            "players.$.rank": 2,
-            "player.$.prize": round(totalPrize * 0.2),
-          },
-        }
-      );
-    } else {
-      // 50% first , 20% second , 10% third
-
-      await User.findOneAndUpdate(
-        { _id: first.user },
-        { $inc: { coin: round(totalPrize * 0.5) } }
-      );
-      await User.findOneAndUpdate(
-        { _id: second.user },
-        { $inc: { coin: round(totalPrize * 0.2) } }
-      );
-      await User.findOneAndUpdate(
-        { _id: third.user },
-        { $inc: { coin: round(totalPrize * 0.1) } }
-      );
-      await Game.updateOne(
-        { "players.user": first },
-        {
-          $set: {
-            "players.$.rank": 1,
-            "player.$.prize": round(totalPrize * 0.5),
-          },
-        }
-      );
-      await Game.updateOne(
-        { "players.user": second },
-        {
-          $set: {
-            "players.$.rank": 2,
-            "player.$.prize": round(totalPrize * 0.2),
-          },
-        }
-      );
-      await Game.updateOne(
-        { "players.user": third },
-        {
-          $set: {
-            "players.$.rank": 3,
-            "player.$.prize": round(totalPrize * 0.1),
-          },
-        }
-      );
-    }
+  if(game.status === 'start') {
+    await Game.updateOne(
+      { "players.user": userId },
+      { $set: { status: "in" } }
+    );
   }
 
-  const gameFinished = game.endTime < moment().unix();
-
-  res.status(gameFinished ? 201 : 200).json(game.players);
+  const isPlayerDone = game?.players.find(player => player.user._id == (userId as any))?.status == 'done'
+  res.status(200).json({ ...game.toObject(), nowTime: moment().unix(), latestQuestion : game.status === 'start' ? latestQuestion : null, isPlayerDone });
 };
 
-export const startGame = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const { playerId } = req.body;
-
-  await Game.updateOne(
-    { "players.user": playerId },
-    { $set: { status: "in" } }
-  );
-
-  const game = await Game.findOne({ _id: id }).populate("questions");
-  res.status(200).json(game.questions[0]);
-};
 
 export const answerQuestion = async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -235,30 +138,8 @@ export const answerQuestion = async (req: Request, res: Response) => {
   const game = await Game.findOne({ _id: id }).populate("questions");
   const player = game.players.find((item) => item.user._id == playerId);
 
-  if (!answer) {
-    if (game.endTime >= moment().unix()) {
-      await Game.updateOne(
-        { _id: id, "players.user": playerId },
-        {
-          $set: {
-            "players.$.status": "in",
-          },
-        }
-      );
+  if(qId == player.latestQuestion) {
 
-      // res.status(200).json(game.questions[player.lastQIndex]);
-    } else {
-      await Game.updateOne(
-        { _id: id, "players.user": playerId },
-        {
-          $set: {
-            "players.$.status": "done",
-          },
-        }
-      );
-      res.status(200).json("Done");
-    }
-  } else {
     if (game.endTime >= moment().unix()) {
       const currentQIndex = game.questions.findIndex((item) => item._id == qId);
       const nextQ = game.questions[currentQIndex + 1];
@@ -268,7 +149,7 @@ export const answerQuestion = async (req: Request, res: Response) => {
         { _id: id, "players.user": playerId },
         {
           $set: {
-            "players.$.lastQIndex": currentQIndex + 1,
+            "players.$.latestQuestion": nextQ,
           },
         }
       );
@@ -292,7 +173,7 @@ export const answerQuestion = async (req: Request, res: Response) => {
         );
       }
 
-      if (currentQIndex + 1 === game.questions.length) {
+      if (!nextQ) {
         await Game.updateOne(
           { _id: id, "players.user": playerId },
           {
@@ -309,28 +190,11 @@ export const answerQuestion = async (req: Request, res: Response) => {
       res.status(400).json({ error: "زمان مسابقه به پایان رسیده است" });
     }
   }
+  
+    
+  
 };
 
-export const changeGameStatus = async (req: Request, res: Response) => {
-  const { gameId, status, playerId } = req.body;
-
-  await Game.updateOne(
-    { "players._id": playerId },
-    {
-      $set: { "players.$.status": status == "start" ? "in" : "done" },
-    }
-  );
-
-  const game = await Game.findOneAndUpdate(
-    { _id: gameId },
-    {
-      $set: { status },
-    },
-    { new: true }
-  );
-
-  res.status(200).json(game);
-};
 
 export const registerGame = async (req: Request, res: Response) => {
   const { userId, gameId } = req.body;

@@ -2,7 +2,6 @@ import mongoose, { Document, Model, Schema, Types } from "mongoose";
 import Player from "./User";
 import User from "./User";
 
-export type AvatarStatus = "before" | "start" | "after";
 
 export interface AvatarInterface extends Document {
   url: string;

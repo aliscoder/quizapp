@@ -24,7 +24,7 @@ const Games = ({ meOnly }: { meOnly?: boolean }) => {
 
 
   const isMine = (game: GameInterface) => {
-    return game.players.map((player) => player.user._id).includes(user._id)
+    return game?.players?.map((player) => player.user._id).includes(user._id)
   }
 
 

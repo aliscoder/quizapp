@@ -15,6 +15,11 @@ export interface PlayerInterface {
   prize:number;
   status:'wait' | 'in' | 'done',
 }
+export interface DepositInterface {
+ 
+  date:string;
+  status:'sucsses' | 'cancel' ,
+}
 
 export interface GameInterface {
   _id: string;
@@ -24,9 +29,10 @@ export interface GameInterface {
   startTime: number;
   players: PlayerInterface[];
   questions: string[];
-  status: "before" | "after" | "start";
+  status: "before" | "after" | "start" | 'archive';
   latestQuestion: any;
   type: 10000 | 20000 | 50000;
+  isPlayerDone:boolean
 }
 
 export type AuthReturnType = {

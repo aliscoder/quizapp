@@ -19,12 +19,13 @@ const Home = () => {
         <HomeTopTab.Screen
           name="All"
           options={{ title: "همه مسابقه ها" }}
-          component={() => <Games />}
+          children={() => <Games />}
+         
         />
         <HomeTopTab.Screen
           options={{ title: "مسابقه های من" }}
           name="Mine"
-          component={() => <Games meOnly />}
+          children={() => <Games meOnly />}
         />
       </HomeTopTab.Navigator>
     </Container>

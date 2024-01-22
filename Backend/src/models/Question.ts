@@ -1,6 +1,5 @@
 import mongoose, { Document, Model, Schema, Types } from "mongoose";
 
-export type QuestionStatus = "before" | "start" | "after";
 
 export interface QuestionInterface extends Document {
   body: string;

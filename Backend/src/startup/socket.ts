@@ -16,38 +16,38 @@ const socket = (io: SocketServer<DefaultEventsMap, DefaultEventsMap, DefaultEven
       socket.leave(game);
     });
 
-    socket.on('check', async ({gameId}) => {
-      const game = await Game.findById(gameId);
+    // socket.on('check', async ({gameId}) => {
+    //   const game = await Game.findById(gameId);
 
-      const checkInterval = setInterval(async () => {
-        if (moment().unix() > game.endTime) {
-          await Game.findByIdAndUpdate(game._id, {
-            $set: { status: "after" },
-          });
-          clearInterval(checkInterval)
-          io.to(gameId).emit('checked', {status: game.status})
-        } else if (
-          game.startTime <= moment().unix() &&
-          game.endTime >= moment().unix()
-        ) {
-          if (game.players && game.players.length >= 2) {
-            await Game.findByIdAndUpdate(game._id, {
-              $set: { status: "start" },
-            });
-            clearInterval(checkInterval)
-            io.to(gameId).emit('checked', {status: game.status})
-          } else {
-            await Game.findByIdAndUpdate(game._id, {
-              $set: { status: "after" },
-            });
-            clearInterval(checkInterval)
-            io.to(gameId).emit('checked', {status: game.status})
-          }
-        }
-      }, 1000)
+    //   const checkInterval = setInterval(async () => {
+    //     if (moment().unix() > game.endTime) {
+    //       await Game.findByIdAndUpdate(game._id, {
+    //         $set: { status: "after" },
+    //       });
+    //       clearInterval(checkInterval)
+    //       io.to(gameId).emit('checked', {status: game.status})
+    //     } else if (
+    //       game.startTime <= moment().unix() &&
+    //       game.endTime >= moment().unix()
+    //     ) {
+    //       if (game.players && game.players.length >= 2) {
+    //         await Game.findByIdAndUpdate(game._id, {
+    //           $set: { status: "start" },
+    //         });
+    //         clearInterval(checkInterval)
+    //         io.to(gameId).emit('checked', {status: game.status})
+    //       } else {
+    //         await Game.findByIdAndUpdate(game._id, {
+    //           $set: { status: "after" },
+    //         });
+    //         clearInterval(checkInterval)
+    //         io.to(gameId).emit('checked', {status: game.status})
+    //       }
+    //     }
+    //   }, 1000)
 
       
-    })
+    // })
 
   });
 };

@@ -3,7 +3,7 @@ import Player from "./User";
 import User from "./User";
 import moment from "jalali-moment";
 
-export type GameStatus = "before" | "start" | "after";
+export type GameStatus = "before" | "start" | "after" | 'archive';
 
 export type Player = {
   user: Types.ObjectId;
@@ -62,6 +62,7 @@ const gameSchema: Schema = new mongoose.Schema<GameInterface>({
   status: {
     type: String,
     required: true,
+    default: 'before'
   },
   questions: [{ type: Schema.Types.ObjectId, ref: "Question" }],
 });
