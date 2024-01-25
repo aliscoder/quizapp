@@ -69,6 +69,21 @@ const authApi = Api.injectEndpoints({
     }),
 
     /*
+    GET COIN
+    */
+
+    getCoin: builder.query<{coin: number}, {userId:string}>({
+      query: ({userId}) => ({
+        url: `/auth/get_coin/${userId}`,
+        method: "GET",
+    
+      }),
+      providesTags: ['Coin']
+    }),
+
+    
+
+    /*
     CHANGE PASSWORD
     */
 
@@ -91,6 +106,7 @@ export const {
   useRegisterMutation,
   useCheckPhoneExistanceMutation,
   useChangePassMutation,
+  useGetCoinQuery
 } = authApi;
 
 export default authApi;

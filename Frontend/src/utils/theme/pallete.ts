@@ -1,7 +1,7 @@
 export default {
   primary: "#040303",
   secondary: "#D89216",
-  info: "#474E68",
+  info: "#1b263b",
   success: "#019267",
   white: "#F6F1E9",
   danger: "#D21312",

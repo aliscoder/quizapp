@@ -23,6 +23,9 @@ export const HomeBottomTabOprions = ({ route }: { route: any }) => {
       } else if (route.name === "Profile") {
         iconName = focused ? "person" : "person-outline";
       }
+      else if (route.name === "Financial") {
+        iconName = focused ? "wallet" : "wallet-outline";
+      }
       return (
         <Icon
           as={Ionicons}

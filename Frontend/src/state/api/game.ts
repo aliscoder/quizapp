@@ -23,7 +23,7 @@ const clientApi = Api.injectEndpoints({
         url: `/games/${userId}/${gameId}`,
         method: "GET",
       }),
-      keepUnusedDataFor: 0
+      keepUnusedDataFor: 0,
     }),
 
      /*
@@ -35,7 +35,7 @@ const clientApi = Api.injectEndpoints({
         method: "POST",
         body,
       }),
-      invalidatesTags: ["Games"],
+      invalidatesTags: ["Games", 'Coin'],
     }),
 
     /*

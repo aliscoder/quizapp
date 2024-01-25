@@ -3,7 +3,7 @@ import { getItemAsync } from "expo-secure-store";
 import { Platform } from "react-native";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:3000",
+  baseUrl: "https://quiz.iran.liara.run",
   prepareHeaders: async (headers) => {
     let token =
       Platform.OS === "web"
@@ -20,7 +20,7 @@ export const Api = createApi({
   reducerPath: "splitApi",
   baseQuery,
   endpoints: () => ({}),
-  tagTypes: ["Games"],
+  tagTypes: ["Games" , 'Coin'],
 });
 
 export default Api;

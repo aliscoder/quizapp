@@ -2,7 +2,7 @@ import { FontAwesome5, SimpleLineIcons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Box, Icon, View } from "native-base";
 import { IViewProps } from "native-base/lib/typescript/components/basic/View/types";
-import React from "react";
+import React, { useEffect } from "react";
 import { useAuth } from "../../hooks";
 import { Row, RowBetween } from "../Row/Row";
 import Touch from "../Touch/Touch";
@@ -12,6 +12,7 @@ import Animation from "../Animation/Animation";
 import { CoinAnimation } from "../../../src/assets/animations";
 import Avatar from "../Avatar/Avatar";
 import { UserScreenNavigationProp } from "@navigation/utils/types";
+import { useGetCoinQuery } from "@state/api/auth";
 
 interface ContainerProps extends IViewProps {
   children?: React.ReactNode;
@@ -31,15 +32,18 @@ interface ContainerProps extends IViewProps {
 const MainHeader = ({hasBack} : {hasBack?: boolean}) => {
   const { user } = useAuth();
   const {navigate, goBack} = useNavigation<UserScreenNavigationProp>()
+  const {data} = useGetCoinQuery({userId: user._id})
 
+ 
   return (
     <Column>
       <RowBetween mx={2} borderRadius={5} height={12} px={4} my={2} bg="card.background">
-        {hasBack && <Touch onPress={goBack}><Icon name='arrow-left' as={SimpleLineIcons} size='md' /></Touch>}
-        <Touch onPress={() => navigate('Deposit')}>
+        <Row space={2}>
+         {hasBack && <Touch onPress={goBack}><Icon name='arrow-left' as={SimpleLineIcons} size='md' /></Touch>}
+      
           <Row bg="light.500" borderRadius={15} pr={2} h={8}>
             <Animation size={40} name={CoinAnimation} />
-            <TextNormal mt={1}>{user.coin.toLocaleString()}</TextNormal>
+            <TextNormal mt={1}>{data?.coin?.toLocaleString()}</TextNormal>
             <Icon
               ml="4"
               as={FontAwesome5}
@@ -47,8 +51,10 @@ const MainHeader = ({hasBack} : {hasBack?: boolean}) => {
               size={15}
               color="#ffd862"
             />
-          </Row>
-        </Touch>
+          </Row> 
+        </Row>
+        
+     
         <Row space={2}>
           <TextNormal>{user.username}</TextNormal>
           {/* @ts-ignore */}

@@ -22,6 +22,7 @@ export type LoginScreenRouteProp = RouteProp<GuestStackParamList, "Login">;
 export type UserBottomTabParamList = {
   Home: undefined;
   Profile: undefined;
+  Financial: undefined;
 };
 
 export type UserStackParamList = {
@@ -32,9 +33,20 @@ export type UserStackParamList = {
   Deposit: any
 };
 
+export type FinancialStackParamList = {
+  Deposit: undefined;
+  Cashout: undefined;
+  Transaction: undefined;
+  Credit: undefined;
+  Entry: undefined
+};
+
 export type UserScreenNavigationProp =
   NativeStackNavigationProp<UserStackParamList>;
+  export type FinancialScreenNavigationProp =
+  NativeStackNavigationProp<FinancialStackParamList>;
 export type UserBottomTabNavigationProp =
   NativeStackNavigationProp<UserBottomTabParamList>;
 export type GameRouteProp = RouteProp<UserStackParamList, "Game">;
+// export type FinancialRouteProp = RouteProp<FinancialStackParamList, "Entry">;
 export type UserBottomTabRouteProp = RouteProp<UserBottomTabParamList>;

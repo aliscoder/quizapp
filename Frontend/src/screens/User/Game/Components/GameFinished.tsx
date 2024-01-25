@@ -49,7 +49,7 @@ const GameFinished = ({ game }: { game: GameInterface }) => {
             <Row space={2}>
               <TextNormal>{item.point}</TextNormal>
 
-              {index < 3 && HAS_CUP && <Icon
+              {index < 3 && HAS_CUP && item.prize  && <Icon
                 size='lg'
                 as={Ionicons}
                 name='trophy'
@@ -57,6 +57,7 @@ const GameFinished = ({ game }: { game: GameInterface }) => {
               />}
 
             </Row>
+            {index < 3 && HAS_CUP && item.prize  && <TextTitle>{item.prize} تومان</TextTitle>}
             <Row space={2}>
               <TextNormal>{item.user.username}</TextNormal>
               <Avatar uri={item.user.avatar?.url} size="md" />
