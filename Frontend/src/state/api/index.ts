@@ -3,7 +3,7 @@ import { getItemAsync } from "expo-secure-store";
 import { Platform } from "react-native";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://quiz.iran.liara.run",
+  baseUrl: "http://192.168.1.22:3000",
   prepareHeaders: async (headers) => {
     let token =
       Platform.OS === "web"

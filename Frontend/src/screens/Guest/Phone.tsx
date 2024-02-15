@@ -1,5 +1,4 @@
 import { Button, Column, Container, Input } from "@components";
-import { useShop } from "@hooks";
 import BaseImage from "./components/GuestBackgroundImage";
 import useSendCode from "./hooks/useSendCode";
 

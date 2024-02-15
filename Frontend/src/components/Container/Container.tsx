@@ -34,6 +34,7 @@ const MainHeader = ({hasBack} : {hasBack?: boolean}) => {
   const {navigate, goBack} = useNavigation<UserScreenNavigationProp>()
   const {data} = useGetCoinQuery({userId: user._id})
 
+
  
   return (
     <Column>
@@ -43,7 +44,7 @@ const MainHeader = ({hasBack} : {hasBack?: boolean}) => {
       
           <Row bg="light.500" borderRadius={15} pr={2} h={8}>
             <Animation size={40} name={CoinAnimation} />
-            <TextNormal mt={1}>{data?.coin?.toLocaleString()}</TextNormal>
+            <TextNormal mt={1}>{data?.toLocaleString()}</TextNormal>
             <Icon
               ml="4"
               as={FontAwesome5}

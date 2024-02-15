@@ -130,3 +130,12 @@ export const ChangePassword = async (req: Request, res: Response) => {
     res.status(200).json("Done");
   }
 };
+
+
+export async function getUserCoins(req: Request , res: Response) {
+  const { userId } = req.params;
+
+  const user = await User.findById(userId);
+
+  res.status(200).json(user.coin)
+}

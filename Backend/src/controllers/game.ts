@@ -12,9 +12,10 @@ import Avatar from "../models/Avatar";
 import { generateAnswerString, isCorrect } from "../utils/generateAnswerString";
 
 export const seedGames = async (req: Request, res: Response) => {
+  // await User.remove();
   await Game.remove();
-  await Question.remove();
-  await Avatar.remove();
+  // await Question.remove();
+  // await Avatar.remove();
 
   for (let i = 0; i < 20; i++) {
     const image = faker.image.avatar();
@@ -23,41 +24,41 @@ export const seedGames = async (req: Request, res: Response) => {
     });
   }
 
-  const avatars = await Avatar.find();
+  // const avatars = await Avatar.find();
+// 
+  // for (let i = 0; i < 200; i++) {
+  //   await User.create({
+  //     name: faker.name.fullName(),
+  //     phone: faker.phone.number("0913#######"),
+  //     point: _.random(0, 500),
+  //     avatar: _.sample(avatars.map((item) => item._id)),
+  //     username: "User " + (i + 1),
+  //     password: await createPassword("123456789"),
+  //   });
+  // }
 
-  for (let i = 0; i < 200; i++) {
-    await User.create({
-      name: faker.name.fullName(),
-      phone: faker.phone.number("0913#######"),
-      point: _.random(0, 500),
-      avatar: _.sample(avatars.map((item) => item._id)),
-      username: "User " + (i + 1),
-      password: await createPassword("123456789"),
-    });
-  }
-
-  for (let i = 0; i < 200; i++) {
-    await Question.create({
-      body: faker.lorem.sentences(_.random(1, 3)),
-      option1: faker.word.noun({ length: _.random(3, 8) }),
-      option2: faker.word.noun({ length: _.random(3, 8) }),
-      option3: faker.word.noun({ length: _.random(3, 8) }),
-      option4: faker.word.noun({ length: _.random(3, 8) }),
-      questionId: generateAnswerString(_.random(1, 4)),
-    });
-  }
+  // for (let i = 0; i < 200; i++) {
+  //   await Question.create({
+  //     body: faker.lorem.sentences(_.random(1, 3)),
+  //     option1: faker.word.noun({ length: _.random(3, 8) }),
+  //     option2: faker.word.noun({ length: _.random(3, 8) }),
+  //     option3: faker.word.noun({ length: _.random(3, 8) }),
+  //     option4: faker.word.noun({ length: _.random(3, 8) }),
+  //     questionId: generateAnswerString(_.random(1, 4)),
+  //   });
+  // }
 
   const startOfDay = moment().startOf("day").unix();
   const endOfDay = moment().endOf("day").unix();
 
-  const totalGamesCount = (endOfDay - startOfDay) / (10 * 60);
+  const totalGamesCount = (endOfDay - startOfDay) / (5 * 60);
 
   const users = await User.find();
   const questions = await Question.find();
 
   for (let i = 0; i < totalGamesCount; i++) {
-    const startTime = startOfDay + i * 10 * 60;
-    const endTime = startTime + 60;
+    const startTime = startOfDay + i * 5 * 60;
+    const endTime = startTime + 180;
 
     const qs: any[] = [];
     for (let j = 0; j < 10; j++) {
@@ -107,9 +108,9 @@ export const getAllGames = async (req: Request, res: Response) => {
     "players.user": { $in: userId },
   }).populate("players.user");
 
-  if(!(allGames[0]?.players?.find(player => player.user._id == (userId as any)))) {
-    allGames.shift()
-  }
+  // if(!(allGames[0]?.players?.some(player => player.user._id === (userId as any)))) {
+  //   allGames.shift()
+  // }
   res.status(200).json({ all: allGames, mine: userGames });
 };
 

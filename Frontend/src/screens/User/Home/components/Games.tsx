@@ -48,7 +48,7 @@ const Games = ({ meOnly }: { meOnly?: boolean }) => {
     }
   }, [selectedGame])
 
-  const Refresher = useMemo(() => <RefreshControl refreshing={isLoading} onRefresh={refetch} /> , []) 
+  // const Refresher = useMemo(() => <RefreshControl refreshing={isLoading} onRefresh={refetch} /> , []) 
   
 
   return (
@@ -61,7 +61,7 @@ const Games = ({ meOnly }: { meOnly?: boolean }) => {
         data={GAMES}
         isLoading={isLoading}
         isError={isError}
-        refreshControl={Refresher}
+        // refreshControl={Refresher}
       />
       <RegisterModal isOpen={isOpen} toggleModal={toggleModal} game={selectedGame}  />
     </>

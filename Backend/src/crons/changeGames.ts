@@ -124,30 +124,30 @@ export async function changeGames() {
   
   games.forEach(async (game) => {
 
-    console.log('game ->' , game.status)
+    // console.log('game ->' , game.status)
 
-    // if(game.status !== 'archive') {
+    if(game.status !== 'archive') {
       
-    //   if (moment().unix() > game.endTime) {
+      if (moment().unix() > game.endTime) {
 
-    //   // await Game.findByIdAndUpdate(game._id, {
-    //   //     $set: { status: "after" },
-    //   //   });
+      await Game.findByIdAndUpdate(game._id, {
+          $set: { status: "after" },
+        });
 
-    //   console.log('game -> ' , game.status , game._id)
+      // console.log('game -> ' , game.status , game._id)
 
-    //   finishGame(game._id)
-    // } else if (
-    //   game.startTime <= moment().unix() &&
-    //   game.endTime >= moment().unix()
-    // ) {
-    //   if (game.players && game.players.length >= 2) {
-    //     await Game.findByIdAndUpdate(game._id, {
-    //       $set: { status: "start" },
-    //     });
-    //   }
-    // }
-    // }
+      finishGame(game._id)
+    } else if (
+      game.startTime <= moment().unix() &&
+      game.endTime >= moment().unix()
+    ) {
+      if (game.players && game.players.length >= 2) {
+        await Game.findByIdAndUpdate(game._id, {
+          $set: { status: "start" },
+        });
+      }
+    }
+    }
     
   });
 }
