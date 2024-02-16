@@ -12,44 +12,44 @@ import { useAuth } from "@hooks";
 const Games = ({ meOnly }: { meOnly?: boolean }) => {
   const { navigate } = useNavigation<UserScreenNavigationProp>();
   const { isLoading, data: games, isError, refetch } = useGames();
-  
 
-  const [isOpen , setIsOpen] = useState(false);
-  const [selectedGame , setSelectedGame] = useState<GameInterface>()
-  const {user} = useAuth()
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedGame, setSelectedGame] = useState<GameInterface>();
+  const { user } = useAuth();
 
   const GAMES = useMemo(() => {
     return meOnly ? games?.mine : games?.all.slice(0, 20);
   }, [games]);
 
-
   const isMine = (game: GameInterface) => {
-    return game?.players?.map((player) => player.user._id).includes(user._id)
-  }
-
-
-  
+    return game?.players?.some((player) => player.user._id === user._id);
+  };
 
   const renderGame = useCallback(({ item }: { item: GameInterface }) => {
-    return <GameCard game={item} onCardAction={checkGameRegisteration} isMine = {isMine(item)} />;
-  },[]);
+    return (
+      <GameCard
+        game={item}
+        onCardAction={checkGameRegisteration}
+        isMine={isMine(item)}
+      />
+    );
+  }, []);
 
   const toggleModal = useCallback(() => {
-    setIsOpen(prev => !prev)
-  },[isOpen])
+    setIsOpen((prev) => !prev);
+  }, [isOpen]);
 
-  const checkGameRegisteration = useCallback((game: GameInterface) => {
-    
-    if (isMine(game)) {
-      navigate("Game", { gameId: game._id });
-    } else {
-      setSelectedGame(game)
-      toggleModal()
-    }
-  }, [selectedGame])
-
-  // const Refresher = useMemo(() => <RefreshControl refreshing={isLoading} onRefresh={refetch} /> , []) 
-  
+  const checkGameRegisteration = useCallback(
+    (game: GameInterface) => {
+      if (isMine(game)) {
+        navigate("Game", { gameId: game._id });
+      } else {
+        setSelectedGame(game);
+        toggleModal();
+      }
+    },
+    [selectedGame]
+  );
 
   return (
     <>
@@ -61,9 +61,12 @@ const Games = ({ meOnly }: { meOnly?: boolean }) => {
         data={GAMES}
         isLoading={isLoading}
         isError={isError}
-        // refreshControl={Refresher}
       />
-      <RegisterModal isOpen={isOpen} toggleModal={toggleModal} game={selectedGame}  />
+      <RegisterModal
+        isOpen={isOpen}
+        toggleModal={toggleModal}
+        game={selectedGame}
+      />
     </>
   );
 };

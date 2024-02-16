@@ -44,7 +44,7 @@ const useRegister = () => {
   useEffect(() => {
     if (isError) {
       //@ts-ignore
-      showError(error.data.error);
+      showError(error?.data?.error);
     }
     if (isSuccess && data) {
       authenticate(data);

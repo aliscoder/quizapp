@@ -31,7 +31,6 @@ const useSendCode = () => {
 
   useEffect(() => {
     if (isError && error) {
-      console.log(error)
       //@ts-ignore
       showError(error?.data?.error || "خطا در برقراری ارتباط");
     }

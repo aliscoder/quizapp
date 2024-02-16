@@ -69,16 +69,15 @@ const authApi = Api.injectEndpoints({
     }),
 
     /*
-    GET COIN
+    GET AUTH USER
     */
 
-    getCoin: builder.query<{coin: number}, {userId:string}>({
+    getAuthUser: builder.query<{user: UserInterface}, {userId:string}>({
       query: ({userId}) => ({
-        url: `/auth/get_coin/${userId}`,
+        url: `/auth/get_user/${userId}`,
         method: "GET",
-    
       }),
-      providesTags: ['Coin']
+      providesTags: ['AuthUser']
     }),
 
     
@@ -106,7 +105,7 @@ export const {
   useRegisterMutation,
   useCheckPhoneExistanceMutation,
   useChangePassMutation,
-  useGetCoinQuery
+  useGetAuthUserQuery,
 } = authApi;
 
 export default authApi;

@@ -1,17 +1,27 @@
-import { Button, Column, Container, Input, Select } from "@components";
-import { useShop } from "@hooks";
+import { Button, Column, Container, Input } from "@components";
 import React from "react";
-import BaseImage from "./components/GuestBackgroundImage";
 import useRegister from "./hooks/useRegister";
 import useSendCodeAgain from "./hooks/useSendCodeAgain";
+import { Image } from "native-base";
+import { Base } from "@utils";
 
 const Register = () => {
   const { handleInputChange, isLoading, formData, handleRegister } = useRegister();
   const { sendCodeAgain, isLoading: againLoading, timer } = useSendCodeAgain();
 
   return (
-    <Container bodyPadded={false} isInSafeArea pt={2}>
-      <Column space={3} p={3}>
+    <Container bodyPadded={false} isInSafeArea={0} pt={4}>
+      <Column
+        h="full"
+        w="full"
+        justifyContent="space-between"
+        pb={5}
+        alignItems="center"
+        px={5}
+        space={2}
+      >
+        <Image alt="" source={Base} width={200} height={200} borderRadius={100} />
+        <Column w="full" space={2}>
         <Input
           onChangeText={(text) => handleInputChange("enteredCode", text)}
           keyboardType="numeric"
@@ -48,7 +58,7 @@ const Register = () => {
           title={timer > 0 ? `${timer} ثانیه صبر کنید` : "ارسال دوباره کد"}
         />
       </Column>
-      <BaseImage height={450} />
+     </Column>
     </Container>
   );
 };

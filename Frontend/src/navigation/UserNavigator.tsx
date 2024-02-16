@@ -6,7 +6,6 @@ import { FinancialStackParamList, UserBottomTabParamList, UserStackParamList } f
 import Game from "@screens/User/Game/Game";
 import Deposit from "@screens/User/Financial/Deposit/Deposit";
 import Profile from "@screens/User/Profile/Profile";
-import GameProvider from "@screens/User/Game/GameProvider";
 import Cashout from "@screens/User/Financial/Cashout/Cashout";
 import Transaction from "@screens/User/Financial/Transaction/Transaction";
 import Credit from "@screens/User/Financial/Credit/Credit";
@@ -35,7 +34,7 @@ const UserNavigator = () => {
   return (
     <UserStack.Navigator screenOptions={{ headerShown: false }}>
       <UserStack.Screen name="Main" component={BottomTabStack} />
-      <UserStack.Screen name="Game" component={GameProvider} />
+      <UserStack.Screen name="Game" component={Game} />
       <UserStack.Screen name="Deposit" component={Deposit} />
     </UserStack.Navigator>
   );

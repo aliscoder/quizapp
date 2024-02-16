@@ -4,7 +4,7 @@ import cors from "cors";
 import gameRouter from "../routes/game";
 import authRouter from "../routes/auth";
 import depositRouter from "../routes/deposit";
-import { seedGames } from "../controllers/game";
+import { seedGames } from "../controllers/seeder";
 
 
 export default (app: Express) => {

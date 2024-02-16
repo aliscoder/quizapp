@@ -1,4 +1,4 @@
-import { useRefreshTokenMutation } from "@state/api/auth";
+import { useGetAuthUserQuery, useRefreshTokenMutation } from "@state/api/auth";
 import { loginUser, logoutUser, updateUser } from "@state/reducers/authReducer";
 import { authSelector } from "@state/selectors/authSelector";
 import { deleteItem, getItem, setItem } from "@utils";
@@ -64,3 +64,6 @@ export default function useAuth() {
     user: user as UserInterface,
   };
 }
+
+
+

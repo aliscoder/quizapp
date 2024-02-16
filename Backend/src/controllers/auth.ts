@@ -2,17 +2,13 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import User from "../models/User";
 import { checkPassword, createPassword } from "../utils/password";
-import Avatar from "../models/Avatar";
 import { PRIVATE_KEY } from "../data";
 
 // CHECK INITIAL STATUS
 export const refreshToken = async (req: Request, res: Response) => {
   const { id: _id } = req.body;
   const user = await User.findById(_id);
-
-  if (user.password) {
-    delete user.password;
-  }
+  delete user.password;
 
   const token = jwt.sign({ userId: user._id }, PRIVATE_KEY);
   res.status(200).json({ token, user });
@@ -63,9 +59,9 @@ export const register = async (req: Request, res: Response) => {
   const user = new User();
   user.phone = phone;
   user.username = username;
-  user.coin = 500000;
+  user.coins = 500000;
   user.password = await createPassword(password);
-  // user.avatar = (await Avatar.find())[0]._id;
+
   const newUser = await user.save();
 
   delete user.password;
@@ -131,11 +127,11 @@ export const ChangePassword = async (req: Request, res: Response) => {
   }
 };
 
-
-export async function getUserCoins(req: Request , res: Response) {
+export async function getAuthUser(req: Request, res: Response) {
   const { userId } = req.params;
 
   const user = await User.findById(userId);
+  delete user.password;
 
-  res.status(200).json(user.coin)
+  res.status(200).json({ user });
 }

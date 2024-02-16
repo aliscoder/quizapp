@@ -8,6 +8,8 @@ import Games from "./components/Games";
 
 const HomeTopTab = createMaterialTopTabNavigator();
 
+
+
 const Home = () => {
   return (
     <Container>

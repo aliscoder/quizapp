@@ -1,18 +1,18 @@
 import mongoose, { Document, Model, Schema, Types } from "mongoose";
 import Player from "./User";
-import User from "./User";
-import moment from "jalali-moment";
 
-export type GameStatus = "before" | "start" | "after" | 'archive';
+export type PlayerStatus = "waiting" | "started" | "finished";
+export type GameStatus = PlayerStatus | "archived";
+export type ChangeStatus = "idle" | "up" | "down";
 
 export type Player = {
-  user: Types.ObjectId;
+  user: Types.ObjectId | { _id: string };
   point: number;
-  isUp: boolean;
-  prize: number;
-  rank: number;
-  status: "done" | "wait" | "in";
-  latestQuestion: Types.ObjectId
+  change?: ChangeStatus;
+  prize?: number;
+  rank?: number;
+  status: PlayerStatus;
+  latestQuestion: Types.ObjectId;
 };
 
 export interface GameInterface extends Document {
@@ -48,26 +48,26 @@ const gameSchema: Schema = new mongoose.Schema<GameInterface>({
     type: [
       {
         user: { type: Schema.Types.ObjectId, ref: "User" },
-        point: Number,
-        isUp: Boolean,
-        prize: Number,
-        rank: Number,
-        status: {type: String , default: 'wait' , required: true},
-        latestQuestion: {type: Schema.Types.ObjectId, ref: 'Question'}
+        point: { type: Number, default: 0 },
+        change: { type: String, enum: ["idle", "up", "down"], default: "idle" },
+        prize: { type: Number, required: false },
+        rank: { type: Number, required: false },
+        status: {
+          type: String,
+          enum: ["waiting", "started", "finished"],
+          default: "waiting",
+        },
+        latestQuestion: { type: Schema.Types.ObjectId, ref: "Question" },
       },
-      
     ],
-    
   },
   status: {
     type: String,
-    required: true,
-    default: 'before'
+    enum: ["waiting", "started", "finished", "archived"],
+    default: "waiting",
   },
   questions: [{ type: Schema.Types.ObjectId, ref: "Question" }],
 });
-
-
 
 //@ts-ignore
 const Game: Model<GameInterface> = mongoose.model("Game", gameSchema);

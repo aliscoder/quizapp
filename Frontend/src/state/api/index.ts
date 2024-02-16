@@ -3,7 +3,7 @@ import { getItemAsync } from "expo-secure-store";
 import { Platform } from "react-native";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://192.168.1.22:3000",
+  baseUrl: "http://192.168.1.149:3000",
   prepareHeaders: async (headers) => {
     let token =
       Platform.OS === "web"
@@ -20,7 +20,7 @@ export const Api = createApi({
   reducerPath: "splitApi",
   baseQuery,
   endpoints: () => ({}),
-  tagTypes: ["Games" , 'Coin'],
+  tagTypes: ["Games", "AuthUser", "Game"],
 });
 
 export default Api;

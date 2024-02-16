@@ -1,13 +1,11 @@
-import mongoose, { Document, Model, Schema, Types } from "mongoose";
-import Avatar from "./Avatar";
+import mongoose, { Document, Model, Schema } from "mongoose";
 
 export interface UserInterface extends Document {
   phone: string;
-  point: number;
-  avatar: Types.ObjectId;
+  avatar: string;
   username: string;
   password: string;
-  coin: number;
+  coins: number;
 }
 
 const userSchema: Schema = new mongoose.Schema<UserInterface>({
@@ -15,17 +13,15 @@ const userSchema: Schema = new mongoose.Schema<UserInterface>({
     type: String,
     required: true,
   },
-  point: {
-    type: Number,
-    default: 0,
-  },
-  coin: {
+  coins: {
     type: Number,
     default: 0,
   },
   avatar: {
-    type: Schema.Types.ObjectId,
+    type: String,
     required: false,
+    default:
+      "https://sm.ign.com/t/ign_nordic/cover/a/avatar-gen/avatar-generations_prsz.300.jpg",
   },
   username: {
     type: String,
@@ -35,15 +31,6 @@ const userSchema: Schema = new mongoose.Schema<UserInterface>({
     type: String,
     required: true,
   },
-});
-
-userSchema.pre(["findOne", "find"], function (next) {
-  this.populate({
-    path: "avatar",
-    model: Avatar,
-    select: ["_id", "url"],
-  });
-  next();
 });
 
 //@ts-ignore

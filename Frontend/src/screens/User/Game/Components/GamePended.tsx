@@ -1,33 +1,18 @@
-import {
-  Avatar,
-  Card,
-  Column,
-  Row,
-  RowBetween,
-  TextNormal,
-} from "@components";
+import { Avatar, Card, Column, Row, RowBetween, TextNormal } from "@components";
 import { useAuth } from "@hooks";
 import { Center, FlatList } from "native-base";
 import React from "react";
-import { useGame } from "../hooks";
 import Timer from "./Timer";
 import { GameInterface } from "@types";
+import moment from "jalali-moment";
 
-
-
-const GamePended = ({game} : {game:GameInterface}) => {
+const GamePended = ({ game }: { game: GameInterface }) => {
   const { user } = useAuth();
 
-
-
-
-  
-
-  
   return (
     <Column h="full" pb={5}>
       <Center h="1/2">
-        <Timer start={game.nowTime} end={game.startTime} />
+        <Timer start={moment().unix()} end={game.startTime} gameId={game._id} />
       </Center>
       <Card h="1/2" bgColor="transparent">
         <RowBetween p={2}>
@@ -41,13 +26,15 @@ const GamePended = ({game} : {game:GameInterface}) => {
             <RowBetween
               p={2}
               mt={index !== 0 ? 2 : 0}
-              background={item.user._id === user._id ? "success" : "transparent"}
+              background={
+                item.user._id === user._id ? "success" : "transparent"
+              }
               borderRadius={5}
             >
               <TextNormal>{item.point}</TextNormal>
               <Row space={2}>
                 <TextNormal>{item.user.username}</TextNormal>
-                <Avatar uri={item.user.avatar?.url} size="sm" />
+                <Avatar uri={item.user.avatar} size="sm" />
               </Row>
             </RowBetween>
           )}
