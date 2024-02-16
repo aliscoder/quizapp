@@ -26,13 +26,7 @@ const Games = ({ meOnly }: { meOnly?: boolean }) => {
   };
 
   const renderGame = useCallback(({ item }: { item: GameInterface }) => {
-    return (
-      <GameCard
-        game={item}
-        onCardAction={checkGameRegisteration}
-        isMine={isMine(item)}
-      />
-    );
+    return <GameCard game={item} onCardAction={checkGameRegisteration} isMine={isMine(item)} />;
   }, []);
 
   const toggleModal = useCallback(() => {
@@ -55,18 +49,14 @@ const Games = ({ meOnly }: { meOnly?: boolean }) => {
     <>
       <List
         isPerformant
-        estimatedItemSize={20}
+        estimatedItemSize={120}
         //@ts-ignore
         renderItem={renderGame}
         data={GAMES}
         isLoading={isLoading}
         isError={isError}
       />
-      <RegisterModal
-        isOpen={isOpen}
-        toggleModal={toggleModal}
-        game={selectedGame}
-      />
+      <RegisterModal isOpen={isOpen} toggleModal={toggleModal} game={selectedGame} />
     </>
   );
 };

@@ -29,10 +29,10 @@ const GameFinished = ({ game }: { game: GameInterface }) => {
 
       {game.status !== "finished" && (
         <Center h="1/5">
-          <Timer gameId={game._id} start={moment().unix()} end={game.endTime} size={35} />
+          <Timer gameId={game._id} start={moment().unix()} end={game.endTime} size={180} />
         </Center>
       )}
-      <Card h="3/5" w="full">
+      <Card h={game.status !== "finished" ? "3/5" : "5/6"} w="full">
         <FlatList
           data={ranking as PlayerInterface[]}
           renderItem={({ item, index }) => (

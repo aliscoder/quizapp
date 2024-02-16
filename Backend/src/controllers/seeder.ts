@@ -13,7 +13,7 @@ import Answer from "../models/Answer";
 export const seedGames = async (req: Request, res: Response) => {
   await Game.remove();
   // await User.remove();
-  // await Question.remove();
+  await Question.remove();
   // await Answer.remove();
 
   if ((await User.count()) == 0) {
@@ -50,14 +50,14 @@ export const seedGames = async (req: Request, res: Response) => {
   const startOfDay = moment().startOf("day").unix();
   const endOfDay = moment().endOf("day").unix();
 
-  const totalGamesCount = (endOfDay - startOfDay) / (2 * 60);
+  const totalGamesCount = (endOfDay - startOfDay) / (5 * 60);
 
   const users = await User.find();
   const questions = await Question.find();
 
   for (let i = 0; i < totalGamesCount; i++) {
-    const startTime = startOfDay + i * 2 * 60;
-    const endTime = startTime + 30;
+    const startTime = startOfDay + i * 5 * 60;
+    const endTime = startTime + 180;
 
     const qs: any[] = [];
 

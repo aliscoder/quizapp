@@ -48,8 +48,8 @@ const GameStarted = ({ game, onFinish }: { game: GameInterface; onFinish?: any }
   };
 
   return (
-    <RowBetween h="full" pb={3}>
-      <ColumnBetween h="full" w="85%" p={3} bg="info" borderRadius={10}>
+    <RowBetween h="full">
+      <ColumnBetween space={5} h="full" w="85%" px={3} py={8} bg="header" borderRadius={10}>
         <RowBetween w="full">
           <Column alignItems="center" space={2}>
             <Center borderRadius="full" borderWidth={3} borderColor="border.sharp" w={50} h={50}>
@@ -58,7 +58,7 @@ const GameStarted = ({ game, onFinish }: { game: GameInterface; onFinish?: any }
             <TextNormal>امتیاز</TextNormal>
           </Column>
 
-          <Timer gameId={game._id} start={moment().unix()} end={game.endTime} size={30} />
+          <Timer gameId={game._id} start={moment().unix()} end={game.endTime} size={80} />
 
           <Column alignItems="center" space={2}>
             <Center borderRadius="full" borderWidth={3} borderColor="border.sharp" w={50} h={50}>
@@ -68,17 +68,16 @@ const GameStarted = ({ game, onFinish }: { game: GameInterface; onFinish?: any }
           </Column>
         </RowBetween>
 
-        <Image radius={20} uri={game.image} size={200} />
-
-        <Column space={6} justifyContent="center" w="full" alignItems="center">
-          <Text fontSize={20} textAlign="center" color="text.light">
-            {currQuestion.body}
-          </Text>
-          <Column w="full">
+        <Image radius={200} uri={game.image} size={120} />
+        <Text px={4} fontSize={20} textAlign="center" color="text.light">
+          {currQuestion.body}
+        </Text>
+        <Column space={8} justifyContent="center" w="full" alignItems="center">
+          <Column w="5/6">
             {currQuestion.options.map((option, index) => (
               <Button
                 key={option}
-                borderRadius={15}
+                borderRadius={8}
                 title={option}
                 disabled={isLoading}
                 scheme="secondary"

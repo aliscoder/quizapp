@@ -11,10 +11,10 @@ const GamePended = ({ game }: { game: GameInterface }) => {
 
   return (
     <Column h="full" pb={5}>
-      <Center h="1/2">
+      <Center h="1/3">
         <Timer start={moment().unix()} end={game.startTime} gameId={game._id} />
       </Center>
-      <Card h="1/2" bgColor="transparent">
+      <Card h="2/3" bgColor="transparent">
         <RowBetween p={2}>
           <TextNormal>{game.players.length} نفر</TextNormal>
           <TextNormal>لیست شرکت کنندگان</TextNormal>
@@ -26,9 +26,7 @@ const GamePended = ({ game }: { game: GameInterface }) => {
             <RowBetween
               p={2}
               mt={index !== 0 ? 2 : 0}
-              background={
-                item.user._id === user._id ? "success" : "transparent"
-              }
+              background={item.user._id === user._id ? "success" : "transparent"}
               borderRadius={5}
             >
               <TextNormal>{item.point}</TextNormal>

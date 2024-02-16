@@ -1,10 +1,10 @@
 {
   "expo": {
-    "scheme" : "quiz",
+    "scheme": "quiz",
     "name": "Quiz",
     "slug": "quiz",
     "version": "1.0.0",
-    "jsEngine" : "hermes",
+    "jsEngine": "hermes",
     "orientation": "portrait",
     "icon": "./assets/photos/Icon.png",
     "androidNavigationBar": {
@@ -29,26 +29,26 @@
     ],
     "updates": {
       "fallbackToCacheTimeout": 0,
-      "url": "https://u.expo.dev/6aa7541a-888d-4123-a4a5-493df625a6d1"
+      "url": "https://u.expo.dev/e1a6c84f-b2fe-4b79-9faf-39634e4c8c78"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.quiz.app"
     },
-    "notification":{
+    "notification": {
       "icon": "./assets/photos/Icon.png"
     },
-    
+
     "android": {
       "package": "com.quiz.app",
       "adaptiveIcon": {
         "foregroundImage": "./assets/photos/Icon.png",
         "backgroundColor": "#151515"
       },
-      "config" : {
-        "googleMaps" : {
-          "apiKey" : "AIzaSyDfApfGwrPP8JZxpnVYUHiReUHmFfK_1IE"
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDfApfGwrPP8JZxpnVYUHiReUHmFfK_1IE"
         }
       },
       "permissions": [
@@ -66,7 +66,7 @@
     "extra": {
       "googleMapsApiKey": "AIzaSyDcdSYW2kGVmVsbpE6WHPT6dEWbbt7jGGc",
       "eas": {
-        "projectId": "6aa7541a-888d-4123-a4a5-493df625a6d1"
+        "projectId": "e1a6c84f-b2fe-4b79-9faf-39634e4c8c78"
       }
     },
     "runtimeVersion": {
