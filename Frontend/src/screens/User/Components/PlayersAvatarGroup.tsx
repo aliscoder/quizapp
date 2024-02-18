@@ -18,7 +18,7 @@ const PlayersAvatarGroup = ({ players }: Props) => {
       max={4}
     >
       {players
-        .map((player) => player.user.avatar?.url)
+        .map((player) => player.user.avatar)
         .map((item, index) => (
           <Avatar
             key={index}

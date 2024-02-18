@@ -19,6 +19,8 @@ export interface PlayerInterface {
   rank?: number;
   status: PlayerStatus;
   latestQuestion: string | QuestionInterface;
+  timeStarted?: number;
+  duration: number
 }
 export interface DepositInterface {
   date: string;

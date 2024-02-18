@@ -42,6 +42,7 @@ export const getGame = async (req: Request, res: Response) => {
   if (game.status === "started" && !isPlayerDone) {
     const player = game.players.find((player) => player.user._id == userId);
     player.status = "started";
+    player.timeStarted = moment().unix()
   }
 
   res.status(200).json(game);
@@ -103,6 +104,8 @@ export const answerQuestion = async (req: Request, res: Response) => {
     const qAnswer = await Answer.findOne({ question: qId });
     const isCorrect = qAnswer.answer == answer;
 
+    
+
     await Game.updateOne(
       { _id: gameId, "players.user": playerId },
       {
@@ -113,6 +116,9 @@ export const answerQuestion = async (req: Request, res: Response) => {
           "players.$.point": isCorrect ? player.point + 5 : player.point,
           "players.$.change": isCorrect ? "up" : "down",
           "players.$.status": !nextQId ? "finished" : player.status,
+          "players.$.duration": !nextQId
+            ? isNaN(moment().unix() - player.timeStarted) ? 200 : moment().unix() - player.timeStarted
+            : player.duration,
         },
       }
     );

@@ -4,7 +4,7 @@ import Deposit from "../models/Deposit";
 import User from "../models/User";
 
 const zarinpal = ZarinPalCheckout.create(
-  "0e9d5222-ac22-11e7-a1bb-000c295eb8fc",
+  "db8f24c3-3806-4e20-92c0-3d6178bf9cd8",
   false
 );
 
@@ -13,7 +13,7 @@ export const depositCoin = async (req: Request, res: Response) => {
   zarinpal
     .PaymentRequest({
       Amount: Number(amount), // In Tomans
-      CallbackURL: "http://192.168.1.35:3000/deposit/verify",
+      CallbackURL: "http://localhost:3000/deposit/verify",
       Description: "pay coin",
     })
     .then(async (response) => {
@@ -61,7 +61,7 @@ export const verifyDeposit = async (req: Request, res: Response) => {
             $set: { status: "rejected" },
           }
         );
-        res.redirect('exp://')
+        res.redirect("exp://");
       }
     })
     .catch(async (err) => {
@@ -71,6 +71,6 @@ export const verifyDeposit = async (req: Request, res: Response) => {
           $set: { status: "rejected" },
         }
       );
-      res.redirect('exp://')
+      res.redirect("exp://");
     });
 };

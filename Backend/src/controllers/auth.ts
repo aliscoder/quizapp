@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import User from "../models/User";
 import { checkPassword, createPassword } from "../utils/password";
 import { PRIVATE_KEY } from "../data";
+import { faker } from "@faker-js/faker";
 
 // CHECK INITIAL STATUS
 export const refreshToken = async (req: Request, res: Response) => {
@@ -60,6 +61,7 @@ export const register = async (req: Request, res: Response) => {
   user.phone = phone;
   user.username = username;
   user.coins = 500000;
+  user.avatar = faker.image.avatar();
   user.password = await createPassword(password);
 
   const newUser = await user.save();

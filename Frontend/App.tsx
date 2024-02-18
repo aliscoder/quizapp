@@ -8,6 +8,8 @@ import "./src/styles.css";
 
 SplashScreen.preventAutoHideAsync();
 
+process.env.TZ = "Asia/Tehran";
+
 export default function App() {
   const { fontLoaded } = useInitialAssets();
 

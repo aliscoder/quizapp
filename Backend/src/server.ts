@@ -7,6 +7,8 @@ import middlewares from "./startup/middlewares";
 import routes from "./startup/routes";
 import server from "./startup/server";
 
+process.env.TZ = "Asia/Tehran";
+
 const app = express();
 export const HTTPserver = http.createServer(app);
 

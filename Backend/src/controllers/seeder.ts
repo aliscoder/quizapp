@@ -15,16 +15,21 @@ export const seedGames = async (req: Request, res: Response) => {
   // await User.remove();
   await Question.remove();
   // await Answer.remove();
+  
+  const createAvatar = () => {
+    return faker.image.avatar()
+  }
 
   if ((await User.count()) == 0) {
+    
     for (let i = 0; i < 200; i++) {
-      const avatar = faker.image.imageUrl();
+      
 
       await User.create({
         name: faker.name.fullName(),
         phone: faker.phone.number("0913#######"),
         point: random(0, 500),
-        avatar,
+        avatar : createAvatar(),
         username: "User " + (i + 1),
         password: await createPassword("123456789"),
       });
@@ -50,14 +55,14 @@ export const seedGames = async (req: Request, res: Response) => {
   const startOfDay = moment().startOf("day").unix();
   const endOfDay = moment().endOf("day").unix();
 
-  const totalGamesCount = (endOfDay - startOfDay) / (5 * 60);
+  const totalGamesCount = (endOfDay - startOfDay) / (2 * 60);
 
   const users = await User.find();
   const questions = await Question.find();
 
   for (let i = 0; i < totalGamesCount; i++) {
-    const startTime = startOfDay + i * 5 * 60;
-    const endTime = startTime + 180;
+    const startTime = startOfDay + i * 2 * 60;
+    const endTime = startTime + 60;
 
     const qs: any[] = [];
 
@@ -79,6 +84,7 @@ export const seedGames = async (req: Request, res: Response) => {
         point: 0,
         status: "waiting",
         latestQuestion: qs[0],
+        
       });
     }
 

@@ -65,6 +65,9 @@ const GameFinished = ({ game }: { game: GameInterface }) => {
                 )}
               </Row>
               {index < 3 && HAS_CUP && item.prize && <TextTitle>{item.prize} تومان</TextTitle>}
+              {game.status === "finished" && (
+                <TextNormal>{`${item.duration === 200 ? "شرکت نکرده است" : item.duration + " ثانیه"}`}</TextNormal>
+              )}
               <Row space={2}>
                 <TextNormal>{item.user.username}</TextNormal>
                 <Avatar uri={item.user.avatar} size="md" />

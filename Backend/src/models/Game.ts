@@ -13,6 +13,8 @@ export type Player = {
   rank?: number;
   status: PlayerStatus;
   latestQuestion: Types.ObjectId;
+  duration?: number;
+  timeStarted?: number;
 };
 
 export interface GameInterface extends Document {
@@ -58,6 +60,8 @@ const gameSchema: Schema = new mongoose.Schema<GameInterface>({
           default: "waiting",
         },
         latestQuestion: { type: Schema.Types.ObjectId, ref: "Question" },
+        duration: { type: Number, default: 200 },
+        timeStarted: { type: Number, required: false },
       },
     ],
   },
