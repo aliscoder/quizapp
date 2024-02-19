@@ -8,6 +8,11 @@ export interface UserInterface {
   avatar: string;
   username: string;
   coins: number;
+  financial?: {
+    card: string;
+    sheba: string;
+    owner: string;
+  }
 }
 
 export interface PlayerInterface {
@@ -22,10 +27,15 @@ export interface PlayerInterface {
   timeStarted?: number;
   duration: number
 }
-export interface DepositInterface {
-  date: string;
-  status: "sucsses" | "cancel";
+export interface FinancialInterface {
+  userId: string;
+  secret?: string;
+  amount: number;
+  status: "pending" | "rejected" | "done";
+  createdAt:number;
+  type: 'cashout' | 'deposit'
 }
+
 
 export interface GameInterface {
   _id: string;

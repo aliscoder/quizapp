@@ -6,6 +6,11 @@ export interface UserInterface extends Document {
   username: string;
   password: string;
   coins: number;
+  financial: {
+    card: string;
+    sheba:string;
+    owner: string
+  }
 }
 
 const userSchema: Schema = new mongoose.Schema<UserInterface>({
@@ -31,6 +36,15 @@ const userSchema: Schema = new mongoose.Schema<UserInterface>({
     type: String,
     required: true,
   },
+  financial: {
+    type : {
+      card: String,
+      sheba:String,
+      owner:String
+    },
+    required: false,
+    
+  }
 });
 
 //@ts-ignore

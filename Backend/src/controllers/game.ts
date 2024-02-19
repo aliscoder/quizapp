@@ -94,6 +94,7 @@ export const answerQuestion = async (req: Request, res: Response) => {
   const game = await Game.findOne({ _id: gameId });
   const player = game.players.find((item) => item.user == playerId);
 
+
   if (qId != player.latestQuestion) {
     res.status(409).json("سوال اشتباه");
   } else if (game.endTime < moment().unix()) {

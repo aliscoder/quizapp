@@ -7,7 +7,6 @@ import Game from "@screens/User/Game/Game";
 import Deposit from "@screens/User/Financial/Deposit/Deposit";
 import Profile from "@screens/User/Profile/Profile";
 import Cashout from "@screens/User/Financial/Cashout/Cashout";
-import Transaction from "@screens/User/Financial/Transaction/Transaction";
 import Credit from "@screens/User/Financial/Credit/Credit";
 import Entry from "@screens/User/Financial/Entry/Entry";
 
@@ -46,7 +45,6 @@ const FinancialNavigator = () => {
       <FinancialStack.Screen name="Entry" component={Entry} />
       <FinancialStack.Screen name="Deposit" component={Deposit} />
       <FinancialStack.Screen name="Cashout" component={Cashout} />
-      <FinancialStack.Screen name="Transaction" component={Transaction} />
       <FinancialStack.Screen name="Credit" component={Credit} />
     </FinancialStack.Navigator>
   );

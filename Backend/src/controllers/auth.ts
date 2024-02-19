@@ -10,6 +10,7 @@ export const refreshToken = async (req: Request, res: Response) => {
   const { id: _id } = req.body;
   const user = await User.findById(_id);
   delete user.password;
+  delete user.financial;
 
   const token = jwt.sign({ userId: user._id }, PRIVATE_KEY);
   res.status(200).json({ token, user });
@@ -67,6 +68,7 @@ export const register = async (req: Request, res: Response) => {
   const newUser = await user.save();
 
   delete user.password;
+  delete user.financial;
 
   const token = jwt.sign({ userId: newUser._id }, PRIVATE_KEY);
   res.status(200).json({ token, user: newUser });
@@ -106,6 +108,7 @@ export const Login = async (req: Request, res: Response) => {
       res.status(400).json({ error: "اطلاعات نامعتبر است" });
     } else {
       delete user.password;
+      delete user.financial;
       const token = jwt.sign({ userId: user._id }, PRIVATE_KEY);
       res.status(200).json({ token, user });
     }
@@ -134,6 +137,7 @@ export async function getAuthUser(req: Request, res: Response) {
 
   const user = await User.findById(userId);
   delete user.password;
+  delete user.financial;
 
   res.status(200).json({ user });
 }

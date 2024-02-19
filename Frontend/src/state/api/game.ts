@@ -66,7 +66,7 @@ const clientApi = Api.injectEndpoints({
         body,
       }),
 
-      invalidatesTags: ["Game"],
+      invalidatesTags: ["Game" , 'AuthUser'],
     }),
   }),
 });

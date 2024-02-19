@@ -1,29 +1,44 @@
-import React, { useCallback } from 'react'
-import { HomeGameTopTabOptions } from "@navigation/utils/options"
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
-import { Dimensions } from 'react-native';
-import { Column, Container, Input, List, RowBetween, Select, TextTitle } from '@components';
-import DepositCard from '@screens/User/Components/DepositCard';
-import { DepositInterface } from '@types';
-const HomeTopTab = createMaterialTopTabNavigator();
-type Props = {}
+import { Button, Column, Container, Input } from "@components";
+import { useAuth } from "@hooks";
+import { useCompleteAccountMutation } from "@state/api/financial";
+import React, { useState } from "react";
 
+const Credit = () => {
+  const { user } = useAuth()
+  const [account, setAccount] = useState({
+    card: "",
+    sheba: "",
+    owner: "",
+  });
 
-
-
-const Credit = (props: Props) => {
-
-
+  const [completeAccount, { isLoading }] = useCompleteAccountMutation()
 
   return (
     <Container hasBack>
       <Column space={2}>
-        <Input label='شماره کارت'/>
-        <Input label='شماره شبا'/>
-        <Input label='نام صاحب حساب'/>
+        <Input
+          isDisabled={!!user.financial}
+          placeholder="6037 ..."
+          onChangeText={(t) => setAccount((prev) => ({ ...prev, card: t }))}
+          label="شماره کارت"
+        />
+        <Input
+          isDisabled={!!user.financial}
+          placeholder="IR ..."
+          onChangeText={(t) => setAccount((prev) => ({ ...prev, sheba: t }))}
+          label="شماره شبا"
+        />
+        <Input
+          isDisabled={!!user.financial}
+          placeholder="علی معافی"
+          onChangeText={(t) => setAccount((prev) => ({ ...prev, owner: t }))}
+          label="نام صاحب حساب"
+        />
+
+        <Button title="ثبت اطلاعات" onPress={() => completeAccount(account)} disabled={isLoading} />
       </Column>
     </Container>
-  )
-}
+  );
+};
 
-export default Credit
+export default Credit;
