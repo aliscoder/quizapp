@@ -24,7 +24,6 @@ const CashoutList = () => {
   const { user } = useAuth();
   const {data: financials, isLoading} = useFinancialsQuery(user._id)
 
-  console.log(financials)
 
   const renderGame = useCallback(({ item }: { item: FinancialInterface }) => {
     return <TransactionCard item={item} />;

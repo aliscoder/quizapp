@@ -18,7 +18,6 @@
     "web:dev": "npx expo start --web",
     "eject": "expo eject",
     "devtools": "react-devtools",
-    "postinstall": "node postinstall.js",
     "build": "eas build -p android --profile preview"
   },
   "dependencies": {

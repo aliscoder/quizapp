@@ -15,19 +15,17 @@ const TransactionCard = ({ item }: Props) => {
         item.status == "done"
           ? theme.colors.success
           : item.status == "pending"
-            ? theme.colors.warning
-            : theme.colors.danger
+          ? theme.colors.warning
+          : theme.colors.danger
       }
     >
       <RowBetween>
-        <Column alignItems="center">
-          <TextTitle>
-            {item.status === "done" ? "انجام شده" : item.status === "pending" ? "در انتظار تایید" : "رد شده"}
-          </TextTitle>
-        </Column>
-        <Column>
-          <TextNormal>{moment(item.createdAt).locale("fa").format("HH : mm - dddd d MMM")}</TextNormal>
-        </Column>
+        <TextNormal>
+          {item.status === "done" ? "انجام شده" : item.status === "pending" ? "در انتظار تایید" : "رد شده"}
+        </TextNormal>
+
+        <TextNormal>{moment(item.createdAt).locale("fa").format("HH : mm - dddd d MMM")}</TextNormal>
+        <TextNormal>{item.amount} تومان</TextNormal>
       </RowBetween>
     </Card>
   );
